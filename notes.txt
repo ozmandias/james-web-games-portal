@@ -1,8 +1,12 @@
 APIs
 
-FreeToGame API
-GameArter API
-itch.io API
-MarketJS API
 ArmorGames
-Y8
+GameDistribution (yes)
+GameArter  (yes)
+Y8 (yes)
+
+Newgrounds (no)
+CrazyGames (no)
+itch.io (no)
+FreeToGame (no)
+MarketJS (premium, no)
