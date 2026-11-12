@@ -1,17 +1,18 @@
+import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
-export default function GameCard({ className }: { className?: string }) {
+export default function GameCard({ className, title, description, image, url }: { className?: string, title?: string, description?: string, image?: string, url?: string }) {
     return (
         <>
-            <Card className="max-w-sm">
+            <Card className={`max-w-sm w-60 ${className}`}>
                 <CardHeader>
-                    <CardTitle>Project Overview</CardTitle>
+                    <CardTitle className="truncate">{title}</CardTitle>
                     <CardDescription>
-                        Track progress and recent activity for your Next.js app.
+                        {description}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    Your design system is ready. Start building your next component.
+                    <img className="w-full" src={image} alt="Game Image" />
                 </CardContent>
             </Card>
         </>

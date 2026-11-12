@@ -1,16 +1,8 @@
+import { GameArterParams } from "@/types/types";
 import "dotenv/config";
 
-interface GameArterParams {
-    limit: number | null;
-    offset: number | null;
-    genre: string[] | null;
-    tag: string[] | null;
-    search: string | null;
-    updated_since: bigint | null;
-}
-
 export async function ListGames(params: GameArterParams) {
-    let url = `${process.env.NEXT_PUBLIC_GAMEARTER_API_URL}/catalog/games`;
+    let url = `${process.env.NEXT_PUBLIC_GAMEARTER_URL}/api/v1/catalog/games`;
     let urlSearchParams = new URLSearchParams();
     if (params.limit) urlSearchParams.set("limit", params.limit.toString());
     if (params.offset) urlSearchParams.set("offset", params.offset.toString());
@@ -31,8 +23,8 @@ export async function ListGames(params: GameArterParams) {
     return data;
 }
 
-export async function GetGame(name: string) {
-    const url = `${process.env.NEXT_PUBLIC_GAMEARTER_API_URL}/catalog/games/${name}`;
+export async function GetOneGame(name: string) {
+    const url = `${process.env.NEXT_PUBLIC_GAMEARTER_URL}/api/v1/catalog/games/${name}`;
 
     const rquest = {};
 

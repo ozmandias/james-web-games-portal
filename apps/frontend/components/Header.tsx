@@ -3,7 +3,7 @@ import { User } from "./animate-ui/icons/user";
 export default function Header({className}: {className?: string}) {
     return (
         <>
-            <div className={`h-15 p-2 py-3 bg-gray-950 text-white flex justify-between items-center ${className}`}>
+            <div className={`h-15 px-4 py-3 bg-gray-950 text-white flex justify-between items-center ${className}`}>
                 <h1>
                     James Web Games
                 </h1>
