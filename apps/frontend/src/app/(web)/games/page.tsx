@@ -1,6 +1,5 @@
-import GameCard from "@/components/(web)/GameCard";
 import { GetGameArterGames } from "./actions";
-import Link from "next/link";
+import GameList from "@/components/(web)/GameList";
 
 export default async function GamesPage() {
     const gameArterGamesData = await GetGameArterGames({
@@ -14,17 +13,7 @@ export default async function GamesPage() {
 
     return (
         <>
-            <div className="p-4 grid grid-cols-4 gap-4">
-                {
-                    gameArterGamesData && gameArterGamesData.games.map((game: any) => {
-                        return (
-                            <Link key={game.slug} href={`/games/${game.slug}`}>
-                                <GameCard  title={game.name} image={game.thumbnail} />
-                            </Link>
-                        );
-                    })
-                }
-            </div>
+            <GameList data={gameArterGamesData}></GameList>
         </>
     );
 }

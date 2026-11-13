@@ -6,15 +6,12 @@ export const instant = false;
 
 export default async function GamePage({params}: {params: Promise<{name: string}>}) {
     const {name} = await params;
-    const gameArterGameData = await GetGameArterGame(name);
-    console.log("gameArterGameData: ", gameArterGameData);
+    let gameArterGameData = await GetGameArterGame(name);
+    gameArterGameData.game_name = name;
 
     return (
         <>
-            <div className="w-full h-full">
-                <GameDetails url={`${process.env.NEXT_PUBLIC_GAMEARTER_URL}/game/${name}`}>
-                </GameDetails>
-            </div>
+            <GameDetails data={gameArterGameData}></GameDetails>
         </>
     );
 }
