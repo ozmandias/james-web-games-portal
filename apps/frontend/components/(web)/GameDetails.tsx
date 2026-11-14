@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { ArrowLeft, Play } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
-export function GameDetails({
+export default function GameDetails({
     className,
     data
 }: {

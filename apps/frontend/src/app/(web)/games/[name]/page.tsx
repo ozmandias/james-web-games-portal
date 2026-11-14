@@ -1,4 +1,4 @@
-import { GameDetails } from "@/components/(web)/GameDetails";
+import GameDetails from "@/components/(web)/GameDetails";
 import { GetGameArterGame } from "./actions";
 import "dotenv/config";
 

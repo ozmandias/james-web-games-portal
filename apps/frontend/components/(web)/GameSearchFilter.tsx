@@ -90,8 +90,8 @@ export default async function GameSearchFilter({ className }: { className?: stri
                 </InputGroup>
 
                 <ButtonGroup className="w-2/12 felx justify-center">
-                    <Button size="default" variant="secondary" className="w-20 h-10">Clear</Button>
-                    <Button size="default" className="w-20 h-10">Search</Button>
+                    <Button size="default" variant="secondary" className="w-20">Clear</Button>
+                    <Button size="default" className="w-20">Search</Button>
                 </ButtonGroup>
             </div>
         </>

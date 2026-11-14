@@ -18,24 +18,25 @@ export default function Header({ className }: { className?: string }) {
                     James Web Games
                 </h1>
 
-                <div className="rounded w-10 h-10 text-black text-center flex justify-center items-center">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger render={<Button variant="outline" className="bg-gray-100" />}>
-                            <User animateOnHover />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuGroup>
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Settings</DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem>Logout</DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                <DropdownMenu>
+                    <DropdownMenuTrigger render={
+                        <div className="rounded w-10 h-10 bg-gray-100 text-black text-center flex justify-center items-center">
+                        </div>
+                    } nativeButton={false}>
+                        <User animateOnHover />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuGroup>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Settings</DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </>
     );

@@ -1,10 +1,14 @@
-import { GetGameArterGames } from "./actions";
 import GameList from "@/components/(web)/GameList";
+import { GetGameArterGames } from "./actions";
 
-export default async function GamesPage() {
+export const instant = false;
+
+export default async function GamesPage({searchParams}: {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
+    const {page = "", size = "", genre = "", tag = "", search = "", updated_since = ""} = await searchParams;
+    
     const gameArterGamesData = await GetGameArterGames({
-        limit: 20,
-        offset: null,
+        limit: Number(size) || 20,
+        offset: Number(size) * Number(page) || 0,
         genre: null,
         tag: null,
         search: null,
