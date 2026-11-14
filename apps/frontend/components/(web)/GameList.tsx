@@ -5,7 +5,7 @@ import GameSearchFilter from "./GameSearchFilter";
 export default async function GameList({className, data}: {className?: string, data?: any}) {
     return (
         <>
-            <div className={`w-full ${className || ""}`}>
+            <div className={`w-auto ${className || ""}`}>
                 <GameSearchFilter className="m-2 p-2" />
 
                 <div className="m-2 p-2 grid grid-cols-4 gap-4">

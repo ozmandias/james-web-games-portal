@@ -4,9 +4,15 @@ ArmorGames
 GameDistribution (yes)
 GameArter  (yes)
 Y8 (yes)
+Miniplay
+Flashpoint Archive
+Flash Games (flash-games.io)
+Flash Museum (flashmuseum.net)
+Kongregate
 
 Newgrounds (no)
 CrazyGames (no)
+Addicting Games (no)
 itch.io (no)
 FreeToGame (no)
 MarketJS (premium, no)

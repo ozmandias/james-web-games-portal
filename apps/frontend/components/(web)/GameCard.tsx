@@ -14,7 +14,7 @@ export default function GameCard({ className, title, description, image, url }: 
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <img className="w-full rounded-lg" src={image || ""} alt="Game Image" />
+                        <img className="w-auto rounded-lg" src={image || ""} alt="Game Image" />
                     </CardContent>
                 </Card>
             </Link>

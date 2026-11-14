@@ -28,7 +28,7 @@ export default function WebRootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <div className="w-full container">
+        <div className="w-auto container">
           <Header />
 
           <div className="flex">
