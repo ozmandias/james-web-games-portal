@@ -8,7 +8,7 @@ export default async function GamesPage({searchParams}: {searchParams: Promise<{
     
     const gameArterGamesData = await GetGameArterGames({
         limit: Number(size) || 20,
-        offset: Number(size) * Number(page) || 0,
+        offset: size ? Number(size) * (Number(page) - 1) : Number(20) * (Number(page) - 1),
         genre: null,
         tag: null,
         search: null,

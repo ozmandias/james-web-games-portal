@@ -18,7 +18,7 @@ export default async function GameList({className, data}: {className?: string, d
                     }
                 </div>
 
-                <GamePagination className="m-2 p-2" />
+                <GamePagination className="m-2 p-2" total={data && data.total ? data.total : 0} />
             </div>
         </>
     )

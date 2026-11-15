@@ -6,19 +6,28 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useEffect, useState, useTransition } from "react";
 
-export default function GamePagination({ className }: { className?: string }) {
+export default function GamePagination({ className, total }: { className?: string, total?: number }) {
     const router = useRouter();
     const pathName = usePathname();
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
 
-    const [page, setPage] = useState(searchParams.get("page") || 0);
+    const [page, setPage] = useState(searchParams.get("page"));
     const [size, setSize] = useState(searchParams.get("size"));
+
+    function getVisiblePages() {
+
+    }
+
+    /*useEffect(() => {
+        if(!page) setPage("1");
+        if(!size) setSize("20");
+    }, []);*/
 
     useEffect(() => {
         let newSearchParams = new URLSearchParams(searchParams.toString());
         if(page) newSearchParams.set("page", page.toString());
-        if(size) newSearchParams.set("size", size);
+        if(size) newSearchParams.set("size", size.toString());
 
         console.log("page: ", page);
         console.log("size: ", size);
@@ -36,7 +45,9 @@ export default function GamePagination({ className }: { className?: string }) {
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>
-                            <PaginationPrevious href="#" onClick={(event) => setPage(page != 0 ? Number(page) - 1 : 0)} />
+                            <PaginationPrevious href="#" onClick={(event) => setPage(
+                                page && !(Number(page) <= 1) ? (Number(page) - 1).toString() : (1).toString()
+                            )} />
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationLink href="#">1</PaginationLink>
@@ -51,7 +62,15 @@ export default function GamePagination({ className }: { className?: string }) {
                             <PaginationEllipsis />
                         </PaginationItem>
                         <PaginationItem>
-                            <PaginationNext href="#" onClick={(event) => setPage(Number(page) + 1)} />
+                            <PaginationNext href="#" onClick={(event) => setPage(
+                                page ?
+                                    size ?
+                                        total && (Number(page) * Number(size) <= total) ?
+                                            (Number(page) + 1).toString() : (page).toString()
+                                    : total && (Number(page) * Number(20) <= total) ?
+                                        (Number(page) + 1).toString() : (page).toString()
+                                : (2).toString()
+                            )} />
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>
