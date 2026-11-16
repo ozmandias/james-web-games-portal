@@ -19,25 +19,15 @@ export default function GamePagination({ className, total }: { className?: strin
 
     }
 
-    /*useEffect(() => {
-        if(!page) setPage("1");
-        if(!size) setSize("20");
-    }, []);*/
-
     useEffect(() => {
         let newSearchParams = new URLSearchParams(searchParams.toString());
         if(page) newSearchParams.set("page", page.toString());
         if(size) newSearchParams.set("size", size.toString());
 
-        console.log("page: ", page);
-        console.log("size: ", size);
-        console.log("newSearchParams: ", newSearchParams);
-        console.log("Router Replace URL: ", `${pathName}?${newSearchParams.toString()}`);
-
         startTransition(() => {
             router.replace(`${pathName}?${newSearchParams.toString()}`);
         });
-    }, [page, size])
+    }, [page, size]);
 
     return (
         <>
