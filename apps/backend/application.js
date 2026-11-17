@@ -6,8 +6,8 @@ application.get("/", (request, response) => {
     response.send("James Web Games Portal Backend");
 });
 
-const admin = require("./admin");
-application.use("/admin", admin);
+const users = require("./users");
+application.use("/users", users);
 
 const games = require("./games");
 application.use("/games", games);
