@@ -1,18 +1,18 @@
 APIs
 
-ArmorGames
-GameDistribution (yes)
-GameArter  (yes)
+Newgrounds (yes - download, no - API)
+ArmorGames (yes - download, no - API)
+Miniplay (yes - download, no - API)
 Y8 (yes)
-Miniplay
-Flashpoint Archive
+Flashpoint Archive (yes - download)
 Flash Games (flash-games.io)
 Flash Museum (flashmuseum.net)
-Kongregate
+GameArter  (yes - API)
 
-Newgrounds (no)
 CrazyGames (no)
-Addicting Games (no)
 itch.io (no)
+GameDistribution (no - premium)
+Kongregate (no)
+Addicting Games (no)
 FreeToGame (no)
-MarketJS (premium, no)
+MarketJS (no - premium)
