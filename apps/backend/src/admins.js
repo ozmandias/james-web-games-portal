@@ -1,4 +1,5 @@
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -19,4 +20,5 @@ router.put("/:id", (request, response) => {
     response.send(`Admins - Id: ${adminId} Update`);
 });
 
-module.exports = router;
+// module.exports = router;
+export default admins = router;

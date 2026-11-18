@@ -1,4 +1,7 @@
-const express = require("express");
+import express from "express";
+import users from "./users";
+import games from "./games";
+
 const application = express();
 const port = 8000;
 
@@ -6,10 +9,7 @@ application.get("/", (request, response) => {
     response.send("James Web Games Portal Backend");
 });
 
-const users = require("./users");
 application.use("/users", users);
-
-const games = require("./games");
 application.use("/games", games);
 
 application.listen(port, () => {

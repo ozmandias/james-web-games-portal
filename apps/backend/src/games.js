@@ -1,22 +1,24 @@
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
 router.get("/", (request, response) => {
-    response.send("Users - Home Page");
+    response.send("Games - Home Page");
 });
 
 router.get("/:id", (request, response) => {
     const gameId = request.params.id;
-    response.send(`Users - Id: ${gameId}`);
+    response.send(`Games - Id: ${gameId}`);
 });
 
 router.post("/", (request, response) => {
-    response.send("Users - Create");
+    response.send("Games - Create");
 });
 
 router.put("/:id", (request, response) => {
     const gameId = request.params.id;
-    response.send(`Users - Id: ${gameId} Update`);
+    response.send(`Games - Id: ${gameId} Update`);
 });
 
-module.exports = router;
+// module.exports = router;
+export default games = router;
