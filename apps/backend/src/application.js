@@ -1,6 +1,6 @@
 import express from "express";
-import users from "./users";
-import games from "./games";
+import users from "./users.js";
+import games from "./games.js";
 
 const application = express();
 const port = 8000;

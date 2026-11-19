@@ -1,5 +1,7 @@
 import express from "express";
 
+let users;
+
 const router = express.Router();
 
 router.get("/", (request, response) => {

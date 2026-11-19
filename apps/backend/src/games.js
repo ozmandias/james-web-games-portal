@@ -1,5 +1,7 @@
 import express from "express";
 
+let games;
+
 const router = express.Router();
 
 router.get("/", (request, response) => {
