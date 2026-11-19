@@ -81,6 +81,7 @@ export const platforms = mysqlTable("platforms", {
 /* --------------------------------------------------------------------------------------- */
 // Relations
 /* --------------------------------------------------------------------------------------- */
+
 export const game_and_assets = defineRelations({games, assets}, (relation) => ({
     games: {
         assets: relation.many.assets()
@@ -100,6 +101,18 @@ export const release_and_data = defineRelations({releases, data}, (relation) => 
     data: {
         release: relation.one.releases({
             from: relation.data.releaseId,
+            to: relation.releases.id
+        })
+    }
+}));
+
+export const release_and_platforms = defineRelations({releases, platforms}, (relation) => ({
+    releases: {
+        platforms: relation.many.platforms()
+    },
+    platforms: {
+        release: relation.one.releases({
+            from: relation.platforms.releaseId,
             to: relation.releases.id
         })
     }
