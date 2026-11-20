@@ -1,6 +1,6 @@
 import express from "express";
-import users from "./users.js";
-import games from "./games.js";
+import user_router from "./users.js";
+import game_router from "./games.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
@@ -11,8 +11,8 @@ application.get("/", (request, response) => {
     response.send("James Web Games Portal Backend");
 });
 
-application.use("/users", users);
-application.use("/games", games);
+application.use("/users", user_router);
+application.use("/games", game_router);
 
 // Swagger UI
 const swaggerOptions = {

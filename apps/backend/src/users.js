@@ -1,6 +1,6 @@
 import express from "express";
 
-let users;
+let user_router;
 
 const router = express.Router();
 
@@ -23,4 +23,4 @@ router.put("/:id", (request, response) => {
 });
 
 // module.exports = router;
-export default users = router;
+export default user_router = router;
