@@ -47,6 +47,17 @@ export const assets = mysqlTable("assets", {
     gameId: int("game_id")
 });
 
+export const categories = mysqlTable("categories", {
+    id: int().primaryKey().autoincrement(),
+    name: varchar({length: 50}),
+    gameId: int("game_id")
+});
+
+export const tags = mysqlTable("tags", {
+    id: int().primaryKey().autoincrement(),
+    gameId: int("game_id")
+});
+
 export const releases = mysqlTable("releases", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 50}),
@@ -55,27 +66,32 @@ export const releases = mysqlTable("releases", {
     gameId: int("game_id")
 });
 
+export const distributions = mysqlTable("distributions", {
+    id: int().primaryKey().autoincrement(),
+    releaseId: int("release_id"),
+    platformId: int("platform_id")
+});
+
 export const data = mysqlTable("data", {
     id: int().primaryKey().autoincrement(),
     url: varchar({length: 1000}),
     file: blob(),
-    releaseId: int("release_id")
-});
-
-export const categories = mysqlTable("categories", {
-    id: int().primaryKey().autoincrement(),
-    name: varchar({length: 50}),
-    gameId: int("game_id")
-});
-
-export const sources = mysqlTable("sources", {
-    id: int().primaryKey().autoincrement()
+    distributionId: int("distribution_id")
 });
 
 export const platforms = mysqlTable("platforms", {
     id: int().primaryKey().autoincrement(),
-    name: varchar({length: 50}),
-    releaseId: int("release_id")
+    name: varchar({length: 50})
+});
+
+export const sources = mysqlTable("sources", {
+    id: int().primaryKey().autoincrement(),
+    gameId: int("game_id"),
+    providerId: int("provider_id")
+});
+
+export const providers = mysqlTable("providers", {
+    id: int().primaryKey().autoincrement()
 });
 
 /* --------------------------------------------------------------------------------------- */
@@ -94,26 +110,86 @@ export const game_and_assets = defineRelations({games, assets}, (relation) => ({
     }
 }));
 
-export const release_and_data = defineRelations({releases, data}, (relation) => ({
-    releases: {
-        data: relation.many.data()
+export const game_and_categories = defineRelations({games, categories}, (relation) => ({
+    games: {
+        categories: relation.many.categories()
     },
-    data: {
+    categories: {
+        game: relation.one.games({
+            from: relation.categories.gameId,
+            to: relation.games.id
+        })
+    }
+}));
+
+export const game_and_tags = defineRelations({games, tags}, (relation) => ({
+    games: {
+        tags: relation.many.tags()
+    },
+    tags: {
+        game: relation.one.games({
+            from: relation.tags.gameId,
+            to: relation.games.id
+        })
+    }
+}));
+
+export const game_and_releases = defineRelations(({games, releases}, (relation) => ({
+    games: {
+        releases: relation.many.releases()
+    },
+    releases: {
+        game: relation.one.games({
+            from: relation.releases.gameId,
+            to: relation.games.id
+        })
+    }
+})));
+
+export const release_and_distributions = defineRelations({releases, distributions}, (relation) => ({
+    releases: {
+        distributions: relation.many.distributions()
+    },
+    distributions: {
         release: relation.one.releases({
-            from: relation.data.releaseId,
+            from: relation.distributions.releaseId,
             to: relation.releases.id
         })
     }
 }));
 
-export const release_and_platforms = defineRelations({releases, platforms}, (relation) => ({
-    releases: {
-        platforms: relation.many.platforms()
+export const distribution_and_data = defineRelations({distributions, data}, (relation) => ({
+    distributions: {
+        data: relation.many.data()
     },
+    data: {
+        distribution: relation.one.distributions({
+            from: relation.data.distributionId,
+            to: relation.distributions.id
+        })
+    }
+}));
+
+export const platform_and_distributions = defineRelations({platforms, distributions}, (relation) => ({
     platforms: {
-        release: relation.one.releases({
-            from: relation.platforms.releaseId,
-            to: relation.releases.id
+        distributions: relation.many.distributions()
+    },
+    distributions: {
+        platform: relation.one.platforms({
+            from: relation.distributions.platformId,
+            to: relation.platforms.id
+        })
+    }
+}));
+
+export const provider_and_sources = defineRelations({providers, sources}, (relation) => ({
+    providers: {
+        providers: relation.many.sources()
+    },
+    sources: {
+        release: relation.one.providers({
+            from: relation.sources.providerId,
+            to: relation.providers.id
         })
     }
 }));
