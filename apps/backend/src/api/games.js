@@ -24,8 +24,7 @@ router.get("/:id", async (request, response) => {
 router.post("/", async (request, response) => {
     const gameData = await request.body;
     const gameCreate = await db.insert(games).values(gameData).then((data) => {return data[0]});
-    gameCreate.affectedRows > 0 ? "successfully created" : "failed to create";
-    response.send(gameCreate);
+    response.send(makeAPIData(gameCreate));
 });
 /*{
     "fieldCount": 0,
@@ -41,8 +40,7 @@ router.put("/:id", async (request, response) => {
     const gameId = await request.params.id;
     const gameData = await request.body;
     const gameUpdate = await db.update(games).set(gameData).where(eq(games.id, gameId)).then((data) => {return data[0]});
-    gameUpdate.affectedRows > 0 ? "successfully updated" : "failed to update";
-    response.send(gameUpdate);
+    response.send(makeAPIData(gameUpdate));
 });
 /*{
     "fieldCount": 0,
@@ -57,8 +55,7 @@ router.put("/:id", async (request, response) => {
 router.delete("/:id", async (request, response) => {
     const gameId = await request.params.id;
     const gameDelete = await db.delete(games).where(eq(games.id, gameId)).then((data) => {return data[0]});
-    gameDelete.affectedRows > 0 ? "successfully deleted" : "failed to delete";
-    response.send(gameDelete);
+    response.send(makeAPIData(gameDelete));
 });
 /*{
     "fieldCount": 0,

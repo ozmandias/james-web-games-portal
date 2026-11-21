@@ -1,18 +1,38 @@
-class APIData {
-    constructor(status_code, description, data) {
+class API {
+    constructor(status_code, description) {
         this.status_code = status_code;
         this.description = description;
-        this.data = data;
         this.timestamp = new Date().toISOString();
     }
 }
 
-export async function makeAPIData(data) {
+class APIData extends API {
+    constructor(status_code, description, data) {
+        super(status_code, description);
+        this.data = data;
+    }
+}
+
+export function makeAPIData(data) {
+    let status_code = data != null ? 200 : 400;
+    let description = "";
+    if(data.affectedRows == null && data.changedRows == null) {
+        description = "get data";
+    } else {
+        if(data.affectedRows > 0 && data.insertId != 0 && data.changedRows == 0) {
+            description = "create data";
+        } else if(data.affectedRows > 0 && data.insertId == 0 && data.changedRows > 0) {
+            description = "update data";
+        } else {
+            description = "delete data";
+        }
+    }
+
     let newAPIData = new APIData(
-        200,
-        "",
+        status_code,
+        description,
         data
     );
-    console.log("newAPIData: ", newAPIData);
+    
     return newAPIData;
 }
