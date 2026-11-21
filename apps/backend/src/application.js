@@ -1,11 +1,15 @@
 import express from "express";
-import user_router from "./users.js";
-import game_router from "./games.js";
+import user_router from "./api/users.js";
+import game_router from "./api/games.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
 const application = express();
 const port = 8000;
+
+application.use(express.json());
+application.use(express.text());
+application.use(express.urlencoded({extended: true}));
 
 application.get("/", (request, response) => {
     response.send("James Web Games Portal Backend");
