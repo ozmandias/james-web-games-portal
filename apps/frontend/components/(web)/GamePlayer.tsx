@@ -3,8 +3,14 @@
 import { Play } from "lucide-react";
 import { Button } from "../ui/button";
 import { Flash } from "react-ruffle";
+import Script from "next/script";
+import { useState } from "react";
 
 export default function GamePlayer({ game_url, image_url, className }: { game_url?: string, image_url?: string, className?: string }) {
+    const [ruffleReady, setRuffleReady] = useState(
+        typeof window !== "undefined" && Boolean((window as any).RufflePlayer)
+    );
+    
     function playGame() {
         const game_player: HTMLIFrameElement | null = document.getElementById("game-player") as HTMLIFrameElement;
         const game_preview: HTMLElement | null = document.getElementById("game-preview");
@@ -37,16 +43,22 @@ export default function GamePlayer({ game_url, image_url, className }: { game_ur
                 {/* <iframe id="game-player" src={undefined} style={{ width: "70%", aspectRatio: "16 / 9", border: 0, display: "none" }} className="my-auto" allowFullScreen>
                 </iframe> */}
 
-                <Flash src={"/games/flash/endless-tournament.swf"} style={{ width: "70%", aspectRatio: "16 / 9", border: 0, display: "none" }}
-                    config={{
-                        autoplay: "on",
-                        parameters: {
-                            // FlashVars
-                        },
-                    }}
-                >
-                    <p>Loading Flash Game...</p>
-                </Flash>
+                <Script src="/library/ruffle-0.7.1/ruffle.js" onLoad={() => setRuffleReady(true)} strategy="afterInteractive" />
+                {ruffleReady == true ? (
+                    <Flash src={"/games/flash/gunblood-western-shootout.swf"} style={{ width: "70%", aspectRatio: "16 / 9", border: 0, display: "flex", justifyContent: "center" }}
+                        config={{
+                            autoplay: "off",
+                            parameters: {
+                                // FlashVars
+                            },
+                        }}
+                    >
+                        <p>Loading Flash Game...</p>
+                    </Flash>
+                ) : (
+                    <>
+                    </>
+                )}
             </div>
         </>
     );

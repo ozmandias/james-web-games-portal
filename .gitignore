@@ -16,6 +16,10 @@ node_modules/
 # next.js
 /apps/frontend/.next/
 /apps/frontend/out/
+/apps/frontend/public/games/flash
+/apps/frontend/public/games/html5
+/apps/frontend/public/games/webgl
+/apps/frontend/public/library/ruffle-0.7.1
 
 # express.js
 /apps/backend/.cache/
