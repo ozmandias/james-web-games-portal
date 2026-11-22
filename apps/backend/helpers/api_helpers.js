@@ -16,17 +16,6 @@ class APIData extends API {
 export function makeAPIData(data) {
     let status_code = data != null ? 200 : 400;
     let description = "";
-    if(data.affectedRows == null && data.changedRows == null) {
-        description = "get data";
-    } else {
-        if(data.affectedRows > 0 && data.insertId != 0 && data.changedRows == 0) {
-            description = "create data";
-        } else if(data.affectedRows > 0 && data.insertId == 0 && data.changedRows > 0) {
-            description = "update data";
-        } else {
-            description = "delete data";
-        }
-    }
 
     let newAPIData = new APIData(
         status_code,

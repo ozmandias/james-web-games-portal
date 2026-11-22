@@ -1,43 +1,42 @@
 import express from "express";
-import db from "../db/database.js";
 import { users } from "../db/schema.js";
-import { desc, eq } from "drizzle-orm";
-import { makeAPIData } from "../helpers/api_helpers.js";
+import { makeAPIData } from "../../helpers/api_helpers.js";
+import { create_and_select, delete_and_select, select, select_pagination, update_and_select } from "../../helpers/db_helpers.js";
 
 let user_router;
 
 const router = express.Router();
 
 router.get("/", async (request, response) => {
-    const offset = await request.params.page || 0;
     const limit = await request.params.size || 10;
-    const userList = await db.select().from(users).where(eq(users.active, true)).orderBy(desc(users.id)).limit(limit).offset(offset);
+    const offset = await request.params.page || 0;
+    const userList = await select_pagination(users, "active", "desc", limit, offset);
     response.send(makeAPIData(userList));
 });
 
 router.get("/:id", async (request, response) => {
     const userId = await request.params.id;
-    const userDetails = await db.select().from(users).where(eq(users.id, userId));
+    const userDetails = await select(users, userId);
     response.send(makeAPIData(userDetails));
 });
 
 router.post("/", async (request, response) => {
     const userData = await request.body;
-    const userCreate = await db.insert(users).values(userData).then((data) => {return data[0]});
-    response.send(makeAPIData(userCreate));
+    const userDetails = await create_and_select(users, userData);
+    response.send(makeAPIData(userDetails));
 });
 
 router.put("/:id", async (request, response) => {
     const userId = await request.params.id;
     const userData = await request.body;
-    const userUpdate = await db.update(users).set(userData).where(eq(users.id, userId)).then((data) => {return data[0]});
-    response.send(makeAPIData(userUpdate));
+    const userDetails = await update_and_select(users, userId, userData);
+    response.send(makeAPIData(userDetails));
 });
 
 router.delete("/:id", async (request, response) => {
     const userId = await request.params.id;
-    const userDelete = await db.delete(users).where(eq(users.id, userId)).then((data) => {return data[0]});
-    response.send(makeAPIData(userDelete));
+    const userDetails = await delete_and_select(users, userId);
+    response.send(makeAPIData(userDetails));
 });
 
 // module.exports = router;
