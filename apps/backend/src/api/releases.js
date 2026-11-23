@@ -1,4 +1,6 @@
-export async function get_releases(limit, offset) {
+/* --------------------------------------------------------------------------------------- */
+
+export async function get_releases_pagination(limit, offset) {
 
 }
 

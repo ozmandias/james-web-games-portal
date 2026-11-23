@@ -69,3 +69,24 @@ export async function delete_and_select(table, id) {
         return dataDetails;
     });
 }
+
+export async function exist_by_id(table, id) {
+    return await db.select().from(table).where(eq(table.id, id)).then((data) => {
+        let dataExists = false;
+        if(Array.isArray(data) && data.length > 0) {
+            dataExists = true;
+        }
+        return dataExists;
+    });
+}
+
+export async function exist_by_column_value(table, column, value) {
+    return await db.select().from(table).where(eq(table[column], value)).then((data) => {
+        let dataExists = false;
+        if(Array.isArray(data) && data.length > 0) {
+            dataExists = true;
+        }
+        return dataExists;
+    });
+}
+

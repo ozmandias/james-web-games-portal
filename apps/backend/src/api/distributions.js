@@ -1,4 +1,6 @@
-export async function get_distributions(limit, offset) {
+/* --------------------------------------------------------------------------------------- */
+
+export async function get_distributions_pagination(limit, offset) {
 
 }
 

@@ -20,6 +20,11 @@ export const users = mysqlTable("users", {
     update_datetime: datetime()
 });
 
+export const admins = mysqlTable("admins", {
+    id: int().primaryKey().autoincrement(),
+    userId: integer("user_id")
+})
+
 export const developers = mysqlTable("developers", {
     id: int().primaryKey().autoincrement(),
     userId: integer("user_id")
@@ -37,6 +42,7 @@ export const uploads = mysqlTable("uploads", {
 export const games = mysqlTable("games", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 255}).notNull(),
+    description: varchar({length: 500}),
     active: boolean().notNull(),
     create_datetime: datetime(),
     update_datetime: datetime()
@@ -44,6 +50,10 @@ export const games = mysqlTable("games", {
 
 export const assets = mysqlTable("assets", {
     int: int().primaryKey().autoincrement(),
+    images: json("images"),
+    videos: json("videos"),
+    profile_image: varchar({length: 500}),
+    background_image: varchar({length: 500}),
     gameId: int("game_id")
 });
 
@@ -55,6 +65,7 @@ export const categories = mysqlTable("categories", {
 
 export const tags = mysqlTable("tags", {
     id: int().primaryKey().autoincrement(),
+    name: varchar({length: 100}),
     gameId: int("game_id")
 });
 
@@ -62,7 +73,6 @@ export const tags = mysqlTable("tags", {
 export const releases = mysqlTable("releases", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 50}),
-    description: varchar({length: 500}),
     version: float(),
     gameId: int("game_id")
 });
@@ -77,7 +87,7 @@ export const distributions = mysqlTable("distributions", {
 // data of content
 export const data = mysqlTable("data", {
     id: int().primaryKey().autoincrement(),
-    url: varchar({length: 1000}),
+    url: varchar({length: 500}),
     file: blob(),
     type: mysqlEnum(["url", "file"]),
     distributionId: int("distribution_id")
@@ -97,7 +107,11 @@ export const sources = mysqlTable("sources", {
 
 // game providers
 export const providers = mysqlTable("providers", {
-    id: int().primaryKey().autoincrement()
+    id: int().primaryKey().autoincrement(),
+    name: varchar({length: 255}).notNull(),
+    home_page: varchar({length: 500}),
+    logo: varchar({length: 500}),
+    approval_status: mysqlEnum(["approved", "pending", "denied"])
 });
 
 /* --------------------------------------------------------------------------------------- */
