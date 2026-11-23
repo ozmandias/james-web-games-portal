@@ -4,7 +4,6 @@ import { makeAPIData } from "../../helpers/api_helpers.js";
 import { create_and_select, delete_and_select, select, select_pagination, update_and_select } from "../../helpers/db_helpers.js";
 
 let user_router;
-
 const router = express.Router();
 
 router.get("/", async (request, response) => {
@@ -41,3 +40,23 @@ router.delete("/:id", async (request, response) => {
 
 // module.exports = router;
 export default user_router = router;
+
+export async function get_users(limit, offset) {
+
+}
+
+export async function get_user(id) {
+
+}
+
+export async function create_user(userData) {
+
+}
+
+export async function update_user(id, userData) {
+
+}
+
+export async function delete_user(id) {
+
+}

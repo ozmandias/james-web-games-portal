@@ -1,5 +1,5 @@
 import { defineRelations } from 'drizzle-orm';
-import { boolean, datetime, int, mysqlTable, varchar, json, float, blob } from 'drizzle-orm/mysql-core';
+import { boolean, datetime, int, mysqlTable, varchar, json, float, blob, mysqlEnum } from 'drizzle-orm/mysql-core';
 import { integer } from 'drizzle-orm/pg-core/index';
 
 /* --------------------------------------------------------------------------------------- */
@@ -58,6 +58,7 @@ export const tags = mysqlTable("tags", {
     gameId: int("game_id")
 });
 
+// game versions
 export const releases = mysqlTable("releases", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 50}),
@@ -66,19 +67,23 @@ export const releases = mysqlTable("releases", {
     gameId: int("game_id")
 });
 
+// content belonging to game versions
 export const distributions = mysqlTable("distributions", {
     id: int().primaryKey().autoincrement(),
     releaseId: int("release_id"),
     platformId: int("platform_id")
 });
 
+// data of content
 export const data = mysqlTable("data", {
     id: int().primaryKey().autoincrement(),
     url: varchar({length: 1000}),
     file: blob(),
+    type: mysqlEnum(["url", "file"]),
     distributionId: int("distribution_id")
 });
 
+// flash, html5 or webgl
 export const platforms = mysqlTable("platforms", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 50})
@@ -90,6 +95,7 @@ export const sources = mysqlTable("sources", {
     providerId: int("provider_id")
 });
 
+// game providers
 export const providers = mysqlTable("providers", {
     id: int().primaryKey().autoincrement()
 });

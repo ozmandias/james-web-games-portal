@@ -45,7 +45,9 @@ export default function GamePlayer({ game_url, image_url, className }: { game_ur
 
                 <Script src="/library/ruffle-0.7.1/ruffle.js" onLoad={() => setRuffleReady(true)} strategy="afterInteractive" />
                 {ruffleReady == true ? (
-                    <Flash src={"/games/flash/gunblood-western-shootout.swf"} style={{ width: "70%", aspectRatio: "16 / 9", border: 0, display: "flex", justifyContent: "center" }}
+                    // https://www.minijuegosgratis.com/flash1234/no_hotlink/batmanmotb.swf
+                    // /games/flash/gunblood-western-shootout.swf
+                    <Flash src={"https://www.minijuegosgratis.com/flash1234/no_hotlink/batmanmotb.swf"} style={{ width: "70%", aspectRatio: "16 / 9", border: 0, display: "flex", justifyContent: "center" }}
                         config={{
                             autoplay: "off",
                             parameters: {

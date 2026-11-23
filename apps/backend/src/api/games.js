@@ -4,8 +4,18 @@ import { makeAPIData } from "../../helpers/api_helpers.js";
 import { create_and_select, delete_and_select, select, select_pagination, update_and_select } from "../../helpers/db_helpers.js";
 
 let game_router;
-
 const router = express.Router();
+
+class GameData {
+    constructor(name, platform, version, file, url, active) {
+        this.name = name;
+        this.platform = platform;
+        this.version = version;
+        this.file = file;
+        this.url = url;
+        this.active = active;
+    }
+}
 
 router.get("/", async (request, response) => {
     const limit = await request.params.size || 10;
@@ -41,3 +51,23 @@ router.delete("/:id", async (request, response) => {
 
 // module.exports = router;
 export default game_router = router;
+
+export async function get_games(limit, offset) {
+    
+}
+
+export async function get_game(id) {
+
+}
+
+export async function create_game(gameData) {
+
+}
+
+export async function update_game(id, gameData) {
+
+}
+
+export async function delete_game(id) {
+
+}
