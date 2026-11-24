@@ -81,7 +81,8 @@ export const releases = mysqlTable("releases", {
 export const distributions = mysqlTable("distributions", {
     id: int().primaryKey().autoincrement(),
     releaseId: int("release_id"),
-    platformId: int("platform_id")
+    sourceId: int("source_id"),
+    type: mysqlEnum(["play", "download"])
 });
 
 // data of content
@@ -89,18 +90,22 @@ export const data = mysqlTable("data", {
     id: int().primaryKey().autoincrement(),
     url: varchar({length: 500}),
     file: blob(),
-    type: mysqlEnum(["url", "file"]),
     distributionId: int("distribution_id")
 });
 
-// flash, html5 or webgl
+// To be removed // windows, mac, web - mostly web
 export const platforms = mysqlTable("platforms", {
     id: int().primaryKey().autoincrement(),
-    name: varchar({length: 50})
+    name: varchar({length: 50}),
+    description: varchar({length: 500})
 });
 
+// flash, webgl, html5 for web games from providers
 export const sources = mysqlTable("sources", {
     id: int().primaryKey().autoincrement(),
+    developer: varchar({length: 255}),
+    runtime: mysqlEnum(["flash", "webgl", "html5"]),
+    embed: mysqlEnum(["url", "file"]),
     gameId: int("game_id"),
     providerId: int("provider_id")
 });
@@ -186,6 +191,18 @@ export const distribution_and_data = defineRelations({distributions, data}, (rel
         distribution: relation.one.distributions({
             from: relation.data.distributionId,
             to: relation.distributions.id
+        })
+    }
+}));
+
+export const game_and_sources = defineRelations({games, sources}, (relation) => ({
+    games: {
+        sources: relation.many.sources()
+    },
+    sources: {
+        game: relation.one.games({
+            from: relation.sources.gameId,
+            to: relation.games.id
         })
     }
 }));
