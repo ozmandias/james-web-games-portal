@@ -83,9 +83,10 @@ export const releases = mysqlTable("releases", {
 export const distributions = mysqlTable("distributions", {
     id: int().primaryKey().autoincrement(),
     platform: mysqlEnum(["pc, console, web, mobile, java"]),
-    type: mysqlEnum(["play", "download"]),
-    releaseId: int("release_id"),
-    sourceId: int("source_id"),
+    runtime: mysqlEnum(["directx", "opengl", "flash", "webgl", "html5", "unity", "java"]),
+    distribution_mode: mysqlEnum(["play", "download"]),
+    data_mode: mysqlEnum(["url", "file"]),
+    releaseId: int("release_id")
 });
 
 // data of content
@@ -93,15 +94,19 @@ export const data = mysqlTable("data", {
     id: int().primaryKey().autoincrement(),
     url: varchar({length: 500}),
     file: blob(),
+    type: mysqlEnum(["hyperlink", "exe", "app", "swf", "java", "html", "zip"]),
     distributionId: int("distribution_id")
 });
 
-// flash, webgl, html5 for web games from providers
+// flash, webgl, html5 for web games from providers | sources that provided games
 export const sources = mysqlTable("sources", {
     id: int().primaryKey().autoincrement(),
     developer: varchar({length: 255}),
+    platform: mysqlEnum(["pc, console, web, mobile, java"]),
     runtime: mysqlEnum(["directx", "opengl", "flash", "webgl", "html5", "unity", "java"]),
-    type: mysqlEnum(["url", "file"]),
+    distribution_mode: mysqlEnum(["play", "download"]),
+    data_mode: mysqlEnum(["url", "file"]),
+    permission: mysqlEnum(["approved", "pending", "denied"]),
     gameId: int("game_id"),
     providerId: int("provider_id")
 });
@@ -112,7 +117,6 @@ export const providers = mysqlTable("providers", {
     name: varchar({length: 255}).notNull(),
     home_page: varchar({length: 500}),
     logo: varchar({length: 500}),
-    approval_status: mysqlEnum(["approved", "pending", "denied"])
 });
 
 // Not used yet // pc, console, web - mostly web
@@ -213,18 +217,6 @@ export const game_and_sources = defineRelations({games, sources}, (relation) => 
         game: relation.one.games({
             from: relation.sources.gameId,
             to: relation.games.id
-        })
-    }
-}));
-
-export const source_and_distributions = defineRelations({sources, distributions}, (relation) => ({
-    sources: {
-        distributions: relation.many.distributions()
-    },
-    distributions: {
-        source: relation.one.sources({
-            from: relation.distributions.sourceId,
-            to: relation.sources.id
         })
     }
 }));
