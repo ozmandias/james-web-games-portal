@@ -2,6 +2,8 @@ import { defineRelations } from 'drizzle-orm';
 import { boolean, datetime, int, mysqlTable, varchar, json, float, blob, mysqlEnum } from 'drizzle-orm/mysql-core';
 import { integer } from 'drizzle-orm/pg-core/index';
 
+// Default to creating new tables rather than using enums.
+
 /* --------------------------------------------------------------------------------------- */
 // User
 /* --------------------------------------------------------------------------------------- */
@@ -72,17 +74,18 @@ export const tags = mysqlTable("tags", {
 // game versions
 export const releases = mysqlTable("releases", {
     id: int().primaryKey().autoincrement(),
-    name: varchar({length: 50}),
     version: float(),
+    name: varchar({length: 50}),
     gameId: int("game_id")
 });
 
 // content belonging to game versions
 export const distributions = mysqlTable("distributions", {
     id: int().primaryKey().autoincrement(),
+    platform: mysqlEnum(["pc, console, web, mobile, java"]),
+    type: mysqlEnum(["play", "download"]),
     releaseId: int("release_id"),
     sourceId: int("source_id"),
-    type: mysqlEnum(["play", "download"])
 });
 
 // data of content
@@ -93,19 +96,12 @@ export const data = mysqlTable("data", {
     distributionId: int("distribution_id")
 });
 
-// To be removed // windows, mac, web - mostly web
-export const platforms = mysqlTable("platforms", {
-    id: int().primaryKey().autoincrement(),
-    name: varchar({length: 50}),
-    description: varchar({length: 500})
-});
-
 // flash, webgl, html5 for web games from providers
 export const sources = mysqlTable("sources", {
     id: int().primaryKey().autoincrement(),
     developer: varchar({length: 255}),
-    runtime: mysqlEnum(["flash", "webgl", "html5"]),
-    embed: mysqlEnum(["url", "file"]),
+    runtime: mysqlEnum(["directx", "opengl", "flash", "webgl", "html5", "unity", "java"]),
+    type: mysqlEnum(["url", "file"]),
     gameId: int("game_id"),
     providerId: int("provider_id")
 });
@@ -117,6 +113,20 @@ export const providers = mysqlTable("providers", {
     home_page: varchar({length: 500}),
     logo: varchar({length: 500}),
     approval_status: mysqlEnum(["approved", "pending", "denied"])
+});
+
+// Not used yet // pc, console, web - mostly web
+export const platforms = mysqlTable("platforms", {
+    id: int().primaryKey().autoincrement(),
+    name: varchar({length: 50}),
+    description: varchar({length: 500})
+});
+
+// Not used yet // directx, opengl, flash, webgl, html5, unity, java
+export const runtimes = mysqlTable("runtimes", {
+    id: int().primaryKey().autoincrement(),
+    name: varchar({length: 50}),
+    description: varchar({length: 500})
 });
 
 /* --------------------------------------------------------------------------------------- */
@@ -207,14 +217,14 @@ export const game_and_sources = defineRelations({games, sources}, (relation) => 
     }
 }));
 
-export const platform_and_distributions = defineRelations({platforms, distributions}, (relation) => ({
-    platforms: {
+export const source_and_distributions = defineRelations({sources, distributions}, (relation) => ({
+    sources: {
         distributions: relation.many.distributions()
     },
     distributions: {
-        platform: relation.one.platforms({
-            from: relation.distributions.platformId,
-            to: relation.platforms.id
+        source: relation.one.sources({
+            from: relation.distributions.sourceId,
+            to: relation.sources.id
         })
     }
 }));

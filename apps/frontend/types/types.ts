@@ -1,3 +1,8 @@
+export interface GameParams {
+    page: number | null;
+    size: number | null;
+}
+
 export interface GameArterParams {
     limit: number | null;
     offset: number | null;
