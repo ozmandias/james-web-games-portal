@@ -44,7 +44,7 @@ export default user_router = router;
 /* --------------------------------------------------------------------------------------- */
 
 export async function get_users_pagination(limit, offset) {
-    return await select_pagination(users, "active", "desc", limit, offset);
+    return await select_pagination(users, "active", "equal", true, "desc", limit, offset);
 }
 
 export async function get_user(id) {

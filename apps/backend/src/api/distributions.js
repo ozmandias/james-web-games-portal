@@ -3,7 +3,7 @@
 import { distributions } from "../db/schema";
 
 export async function get_distributions_pagination(limit, offset) {
-    return await select_pagination(distributions, "active", "desc", limit, offset);
+    return await select_pagination(distributions, null, null, null, "desc", limit, offset);
 }
 
 export async function get_distribution(id) {

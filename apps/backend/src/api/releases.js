@@ -3,7 +3,7 @@
 import { releases } from "../db/schema";
 
 export async function get_releases_pagination(limit, offset) {
-    return await select_pagination(releases, "active", "desc", limit, offset);
+    return await select_pagination(releases, null, null, null, "desc", limit, offset);
 }
 
 export async function get_release(id) {

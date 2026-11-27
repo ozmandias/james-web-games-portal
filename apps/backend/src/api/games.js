@@ -50,13 +50,29 @@ router.delete("/:id", async (request, response) => {
     response.send(makeAPIData(gameDetails));
 });
 
+router.get("/:id/releases", async (request, response) => {
+    response.send("get releases");
+});
+
+router.post("/:id/releases", async (request, response) => {
+    response.send("create new release");
+});
+
+router.put("/:id/releases/:rid", async (request, response) => {
+    response.send("update a release");
+});
+
+router.delete("/:id/releases/:rid", async (request, response) => {
+    response.send("delete a release");
+});
+
 // module.exports = router;
 export default game_router = router;
 
 /* --------------------------------------------------------------------------------------- */
 
 export async function get_games_pagination(limit, offset) {
-    return await select_pagination(games, "active", "desc", limit, offset);
+    return await select_pagination(games, "active", "equal", true, "desc", limit, offset);
 }
 
 export async function get_game(id) {

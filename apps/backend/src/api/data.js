@@ -3,7 +3,7 @@
 import { data } from "../db/schema";
 
 export async function get_data_pagination(limit, offset) {
-    return await select_pagination(data, "active", "desc", limit, offset);
+    return await select_pagination(data, null, null, null, "desc", limit, offset);
 }
 
 export async function get_data(id) {

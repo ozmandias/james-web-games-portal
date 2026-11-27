@@ -1,8 +1,29 @@
 import db from "../src/db/database.js";
-import { desc, eq } from "drizzle-orm";
+import { asc, desc, eq, gt, gte, lt, lte, ne } from "drizzle-orm";
 
-export async function select_pagination(table, filter="", order="desc", limit, offset) {
-    return db.select().from(table).where(eq(table[filter], true)).orderBy(desc(table.id)).limit(limit).offset(offset);
+export async function select_pagination(table, filter, condition, value, order, limit, offset) {
+    return db.select()
+        .from(table)
+        .where(
+            filter && condition && value ?
+                condition == "equal" ? eq(table[filter], value)
+                : condition == "like" ? like(table[filter], value)
+                : condition == "greater than" ? gt(table[filter], value)
+                : condition == "greater than or equal" ? gte(table[filter], value)
+                : condition == "less than" ? lt(table[filter], value)
+                : condition == "less than or equal" ? lte(table[filter], value)
+                : ne(table[filter], value)
+            : undefined
+        )
+        .orderBy(
+            order ?
+                order == "asc" ?
+                asc(table.id)
+                : desc(table.id)
+            : undefined
+        )
+        .limit(limit)
+        .offset(offset);
 }
 
 export async function select(table, id) {
