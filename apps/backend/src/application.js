@@ -1,6 +1,9 @@
 import express from "express";
 import user_router from "./api/users.js";
 import game_router from "./api/games.js";
+import release_router from "./api/releases.js";
+import distribution_router from "./api/distributions.js";
+import data_router from "./api/data.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
@@ -17,6 +20,9 @@ application.get("/", (request, response) => {
 
 application.use("/users", user_router);
 application.use("/games", game_router);
+application.use("/releases", release_router);
+application.use("/distributions", distribution_router);
+application.use("/data", data_router);
 
 // Swagger UI
 const swaggerOptions = {

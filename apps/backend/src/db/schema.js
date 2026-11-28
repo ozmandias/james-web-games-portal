@@ -45,6 +45,7 @@ export const games = mysqlTable("games", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 255}).notNull(),
     description: varchar({length: 500}),
+    controls: varchar({length: 500}),
     active: boolean().notNull(),
     create_datetime: datetime(),
     update_datetime: datetime()

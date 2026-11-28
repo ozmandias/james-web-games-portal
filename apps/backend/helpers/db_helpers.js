@@ -1,6 +1,23 @@
 import db from "../src/db/database.js";
 import { asc, desc, eq, gt, gte, lt, lte, ne } from "drizzle-orm";
 
+class Pagination {
+    constructor(total, page, size, next, previous) {
+        this.total = total;
+        this.page = page;
+        this.size = size;
+        this.next = next;
+        this.previous = previous;
+    }
+}
+
+class PaginationData extends Pagination {
+    constructor(total, page, size, next, previous, content) {
+        super(total, page, size, next, previous);
+        this.content = content;
+    }
+}
+
 export async function select_pagination(table, filter, condition, value, order, limit, offset) {
     return db.select()
         .from(table)
@@ -111,3 +128,21 @@ export async function exist_by_column_value(table, column, value) {
     });
 }
 
+export async function makePaginationData(data) {
+    let total;
+    let page;
+    let size;
+    let next;
+    let previous;
+    
+    let newPaginationData = new PaginationData(
+        total,
+        page,
+        size,
+        next,
+        previous,
+        data
+    );
+
+    return newPaginationData;
+}

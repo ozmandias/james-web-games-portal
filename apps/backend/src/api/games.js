@@ -7,14 +7,13 @@ let game_router;
 const router = express.Router();
 
 class GameData {
-    constructor(name, description, version, platform, file, url, active) {
+    constructor(name, description, controls,  active, images, videos) {
         this.name = name;
         this.description = description;
-        this.version = version;
-        this.platform = platform;
-        this.file = file;
-        this.url = url;
+        this.controls = controls;
         this.active = active;
+        this.create_datetime = new Date().toISOString();
+        this.update_datetime = new Date().toISOString();
     }
 }
 
@@ -48,22 +47,6 @@ router.delete("/:id", async (request, response) => {
     const gameId = await request.params.id;
     const gameDetails = await delete_game(gameId);
     response.send(makeAPIData(gameDetails));
-});
-
-router.get("/:id/releases", async (request, response) => {
-    response.send("get releases");
-});
-
-router.post("/:id/releases", async (request, response) => {
-    response.send("create new release");
-});
-
-router.put("/:id/releases/:rid", async (request, response) => {
-    response.send("update a release");
-});
-
-router.delete("/:id/releases/:rid", async (request, response) => {
-    response.send("delete a release");
 });
 
 // module.exports = router;
