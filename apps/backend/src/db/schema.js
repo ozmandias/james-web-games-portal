@@ -1,6 +1,5 @@
 import { defineRelations } from 'drizzle-orm';
 import { boolean, datetime, int, mysqlTable, varchar, json, float, blob, mysqlEnum } from 'drizzle-orm/mysql-core';
-import { integer } from 'drizzle-orm/pg-core/index';
 
 // Default to creating new tables rather than using enums.
 
@@ -24,17 +23,35 @@ export const users = mysqlTable("users", {
 
 export const admins = mysqlTable("admins", {
     id: int().primaryKey().autoincrement(),
-    userId: integer("user_id")
+    userId: int("user_id")
 })
 
 export const developers = mysqlTable("developers", {
     id: int().primaryKey().autoincrement(),
-    userId: integer("user_id")
+    userId: int("user_id")
+});
+
+export const media = mysqlTable("media", {
+    id: int().primaryKey().autoincrement(),
+    profile_image: varchar({length: 500}),
+    background_image: varchar({length: 500}),
+    images: json("images"),
+    videos: json("videos"),
+    type: mysqlEnum(["user", "developer", "admin", "provider"]),
+    userId: int("user_id"),
+    developerId: int("developer_id"),
+    adminId: int("admin_id"),
+    providerId: int("provider_id"),
 });
 
 export const uploads = mysqlTable("uploads", {
     id: int().primaryKey().autoincrement(),
-    developerId: integer("developer_id")
+    developerId: int("developer_id")
+});
+
+export const approvals = mysqlTable("approvals", {
+    id: int().primaryKey().autoincrement(),
+    adminId: int("admin_id")
 });
 
 /* --------------------------------------------------------------------------------------- */
@@ -53,10 +70,10 @@ export const games = mysqlTable("games", {
 
 export const assets = mysqlTable("assets", {
     int: int().primaryKey().autoincrement(),
-    images: json("images"),
-    videos: json("videos"),
     profile_image: varchar({length: 500}),
     background_image: varchar({length: 500}),
+    images: json("images"),
+    videos: json("videos"),
     gameId: int("game_id")
 });
 
@@ -116,8 +133,7 @@ export const sources = mysqlTable("sources", {
 export const providers = mysqlTable("providers", {
     id: int().primaryKey().autoincrement(),
     name: varchar({length: 255}).notNull(),
-    home_page: varchar({length: 500}),
-    logo: varchar({length: 500}),
+    home_page: varchar({length: 500})
 });
 
 // Not used yet // pc, console, web - mostly web
